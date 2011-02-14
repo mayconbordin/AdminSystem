@@ -1,0 +1,50 @@
+<?php if ($this->pageCount): ?>
+
+			<!--  start paging..................................................... -->
+			<table border="0" cellpadding="0" cellspacing="0" id="paging-table">
+			<tr>
+			<td>
+			
+			<!-- First page link -->
+			<?php if (isset($this->previous)): ?>
+				<a href="<?php echo $this->url(array('page' => $this->first)); ?>" class="page-far-left"></a>
+			<?php else: ?>
+			  	<span class="page-far-left"></span>
+			<?php endif; ?>
+			
+			<!-- Previous page link -->
+			<?php if (isset($this->previous)): ?>
+				<a href="<?php echo $this->url(array('page' => $this->previous)); ?>" class="page-left"></a>
+			<?php else: ?>
+			  	<span class="page-left"></span>
+			<?php endif; ?>
+			
+				<div id="page-info">Page <strong><?= $this->current ?></strong> / <?= $this->last ?></div>
+			
+			<!-- Next page link -->
+			<?php if (isset($this->next)): ?>
+				<a href="<?php echo $this->url(array('page' => $this->next)); ?>" class="page-right"></a>
+			<?php else: ?>
+			 	<span class="page-right"></span>
+			<?php endif; ?>
+			
+			<!-- Last page link -->
+			<?php if (isset($this->next)): ?>
+				<a href="<?php echo $this->url(array('page' => $this->last)); ?>" class="page-far-right"></a>
+			<?php else: ?>
+				<span class="page-far-right"></span>
+			<?php endif; ?>
+			</td>
+			<td>
+			<select  class="styledselect_pages">
+				<option value="">Number of rows</option>
+				<option value="">1</option>
+				<option value="">2</option>
+				<option value="">3</option>
+			</select>
+			</td>
+			</tr>
+			</table>
+			<!--  end paging................ -->
+			
+<?php endif; ?>

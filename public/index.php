@@ -7,6 +7,9 @@ defined('APPLICATION_PATH')
 // Define application environment
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+    
+// Define application url
+define('APPLICATION_URL', 'http://localhost/AdminSystem/public/');
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(

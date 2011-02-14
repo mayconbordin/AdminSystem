@@ -1,0 +1,141 @@
+<?php
+
+class Admin_Model_LoginAttempt_Repository implements Zf_Model_IRepository, Login_Model_LoginAttempt_IDAO
+{
+	protected $_dao;
+	protected $_mapper;
+	
+	/**
+	 * @param Login_Model_LoginAttempt_DAO $dao
+	 */
+	public function setDao($dao) {
+		if (is_string($dao)) {
+            $dao = new $dao();
+        }
+        if (!$dao instanceof Login_Model_LoginAttempt_DAO) {
+            throw new Login_Model_LoginAttempt_Exception('Invalid data access object provided');
+        }
+        $this->_dao = $dao;
+        
+        return $this;
+	}
+
+	/**
+	 * @return Login_Model_LoginAttempt_DAO
+	 */
+	public function getDao() {
+		if (null === $this->_dao) {
+            $this->setDao('Login_Model_LoginAttempt_DAO');
+        }
+        return $this->_dao;
+	}
+
+	/**
+	 * @param unknown_type $mapper
+	 */
+	public function setMapper($mapper) {
+		if (is_string($mapper)) {
+            $mapper = new $mapper();
+        }
+        if (!$mapper instanceof Zf_Model_DataMapper) {
+            throw new Login_Model_LoginAttempt_Exception('Invalid data mapper provided');
+        }
+        $this->_mapper = $mapper;
+        
+        return $this;
+	}
+
+	/**
+	 * @return Zf_Model_DataMapper
+	 */
+	public function getMapper() {
+		if (null === $this->_mapper) {
+            $this->setMapper('Login_Model_LoginAttempt_Mapper');
+        }
+        return $this->_mapper;
+	}
+
+	/**
+	 * 
+	 * @param unknown_type $datetime
+	 * @param unknown_type $ip
+	 */
+	public function fetchRow($datetime, $ip) {
+		try {
+			$row = $this->getDao()->fetchRow($datetime, $ip);
+			$loginAttempt = $this->getMapper()->assign(new Login_Model_LoginAttempt_Entity(), $row);
+			return $loginAttempt;
+		} catch (Login_Model_LoginAttempt_Exception $ex) {
+			throw $ex;
+		} catch (Zf_Model_DataMapperException $ex) {
+			throw new Login_Model_LoginAttempt_Exception($ex);
+		}
+	}
+
+	/**
+	 * @param unknown_type unknown_type $where
+	 * @param unknown_type unknown_type $order
+	 * @param unknown_type unknown_type $count
+	 * @param unknown_type unknown_type $offset
+	 */
+	public function fetchAll($where = null, $order = null, $count = null, $offset = null) {
+		try {
+			$rows = $this->getDao()->fetchAll($where, $order, $count, $offset);
+			$loginAttempts = array();
+			
+			foreach ( $rows as $row ) {
+				$loginAttempts[] = $this->getMapper()->assign(new Login_Model_LoginAttempt_Entity(), $row);
+			}
+			
+			return $loginAttempts;
+		} catch (Login_Model_LoginAttempt_Exception $ex) {
+			throw $ex;
+		} catch (Zf_Model_DataMapperException $ex) {
+			throw new Login_Model_LoginAttempt_Exception($ex);
+		}
+		
+		return null;
+	}
+
+	/**
+	 * @param unknown_type unknown_type $data
+	 */
+	public function save($data) {
+		try {
+			$dataArray = $this->getMapper()->map($data);
+			$this->getDao()->save($dataArray);
+		} catch (Login_Model_LoginAttempt_Exception $ex) {
+			throw $ex;
+		}
+		
+		return null;
+	}
+
+/**
+	 * @param unknown_type unknown_type $data
+	 */
+	public function delete($data) {
+		try {
+			$dataArray = $this->getMapper()->map($data);
+			$this->getDao()->delete($dataArray);
+		} catch (Login_Model_LoginAttempt_Exception $ex) {
+			throw $ex;
+		}
+		
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param unknown_type $order
+	 */
+	public function select($order = null) {
+		try {
+			$this->getDao()->select($order);
+		} catch (Login_Model_LoginAttempt_Exception $ex) {
+			throw $ex;
+		}
+		
+		return null;
+	}
+}

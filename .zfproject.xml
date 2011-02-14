@@ -16,7 +16,81 @@
       <formsDirectory enabled="false"/>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory/>
-      <modulesDirectory enabled="false"/>
+      <modulesDirectory>
+        <moduleDirectory moduleName="admin">
+          <apisDirectory enabled="false"/>
+          <configsDirectory enabled="false"/>
+          <controllersDirectory>
+            <controllerFile controllerName="Index">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="Login">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="Logout">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="User">
+              <actionMethod actionName="index"/>
+              <actionMethod actionName="delete"/>
+              <actionMethod actionName="edit"/>
+            </controllerFile>
+          </controllersDirectory>
+          <formsDirectory>
+            <formFile formName="User"/>
+          </formsDirectory>
+          <layoutsDirectory enabled="false"/>
+          <modelsDirectory>
+            <dbTableDirectory>
+              <dbTableFile dbTableName="LoginAttempt"/>
+              <dbTableFile dbTableName="User"/>
+              <dbTableFile dbTableName="UserLevel"/>
+            </dbTableDirectory>
+            <modelFile modelName="LoginAttempt/DAO"/>
+            <modelFile modelName="LoginAttempt/Entity"/>
+            <modelFile modelName="LoginAttempt/Exception"/>
+            <modelFile modelName="LoginAttempt/IDAO"/>
+            <modelFile modelName="LoginAttempt/Mapper"/>
+            <modelFile modelName="LoginAttempt/Repository"/>
+            <modelFile modelName="User/DAO"/>
+            <modelFile modelName="User/Entity"/>
+            <modelFile modelName="User/Exception"/>
+            <modelFile modelName="User/IDAO"/>
+            <modelFile modelName="User/Mapper"/>
+            <modelFile modelName="User/Repository"/>
+            <modelFile modelName="UserLevel/DAO"/>
+            <modelFile modelName="UserLevel/Entity"/>
+            <modelFile modelName="UserLevel/IDAO"/>
+            <modelFile modelName="UserLevel/Mapper"/>
+            <modelFile modelName="UserLevel/Repository"/>
+            <modelFile modelName="UserLevel/Exception"/>
+          </modelsDirectory>
+          <viewsDirectory>
+            <viewScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Login">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Logout">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="User">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="User">
+                <viewScriptFile forActionName="delete"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="User">
+                <viewScriptFile forActionName="edit"/>
+              </viewControllerScriptsDirectory>
+            </viewScriptsDirectory>
+            <viewHelpersDirectory/>
+            <viewFiltersDirectory/>
+          </viewsDirectory>
+        </moduleDirectory>
+      </modulesDirectory>
       <viewsDirectory>
         <viewScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">
@@ -58,6 +132,12 @@
       <testPHPUnitConfigFile filesystemName="phpunit.xml"/>
       <testApplicationDirectory>
         <testApplicationBootstrapFile filesystemName="bootstrap.php"/>
+        <testApplicationControllerDirectory>
+          <testApplicationControllerFile filesystemName="IndexControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="LoginControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="LogoutControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="UserControllerTest.php"/>
+        </testApplicationControllerDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>
         <testLibraryBootstrapFile filesystemName="bootstrap.php"/>
