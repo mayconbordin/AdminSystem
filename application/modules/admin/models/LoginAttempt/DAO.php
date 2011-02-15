@@ -1,6 +1,6 @@
 <?php
 
-class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Login_Model_LoginAttempt_IDAO
+class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Admin_Model_LoginAttempt_IDAO
 {
 	/**
 	 * @var Login_Model_DbTable_LoginAttempt
@@ -15,7 +15,7 @@ class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Login_Model_LoginAt
             $dbTable = new $dbTable();
         }
         if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Login_Model_LoginAttempt_Exception('Invalid table data gateway provided');
+            throw new Admin_Model_LoginAttempt_Exception('Invalid table data gateway provided');
         }
         $this->_dbTable = $dbTable;
         
@@ -27,7 +27,7 @@ class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Login_Model_LoginAt
 	 */
 	public function getDbTable() {
 		if (null === $this->_dbTable) {
-            $this->setDbTable('Login_Model_DbTable_LoginAttempt');
+            $this->setDbTable('Admin_Model_DbTable_LoginAttempt');
         }
         return $this->_dbTable;
 	}
@@ -49,7 +49,7 @@ class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Login_Model_LoginAt
 	     
 	        return $row;
 		} catch(Exception $ex) {
-			throw new Login_Model_LoginAttempt_Exception($ex);
+			throw new Admin_Model_LoginAttempt_Exception($ex);
 		}
 		
 		return null;
@@ -66,7 +66,7 @@ class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Login_Model_LoginAt
 			$resultSet = $this->getDbTable()->fetchAll($where, $order, $count, $offset);
 	        return $resultSet->toArray();
 		} catch(Exception $ex) {
-			throw new Login_Model_LoginAttempt_Exception($ex);
+			throw new Admin_Model_LoginAttempt_Exception($ex);
 		}
 		
 		return null;
@@ -92,7 +92,7 @@ class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Login_Model_LoginAt
 	    			));
 	        }
 		} catch(Exception $ex) {
-			throw new Login_Model_LoginAttempt_Exception($ex);
+			throw new Admin_Model_LoginAttempt_Exception($ex);
 		}
 		
 		return null;
@@ -108,7 +108,7 @@ class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Login_Model_LoginAt
 	    				'att_ip' 	   => $data['att_ip']
 			));
 		} catch(Exception $ex) {
-			throw new Login_Model_LoginAttempt_Exception($ex);
+			throw new Admin_Model_LoginAttempt_Exception($ex);
 		}
 		
 		return null;
@@ -129,7 +129,7 @@ class Admin_Model_LoginAttempt_DAO implements Zf_Model_IDAO, Login_Model_LoginAt
 	
 	    	return $select;
 		} catch(Exception $ex) {
-			throw new Login_Model_LoginAttempt_Exception($ex);
+			throw new Admin_Model_LoginAttempt_Exception($ex);
 		}
 		
 		return null;

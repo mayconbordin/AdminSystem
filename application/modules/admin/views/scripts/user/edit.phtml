@@ -1,1 +1,15 @@
-<br /><br /><center>View script for controller <b>User</b> and script/action name <b>edit</b></center>
+<?php
+$this->layout()->setLayout('admin/admin');
+$this->title = "Editando Usuário";
+$this->headTitle($this->title);
+$this->selectedMenu = 'usuários';
+
+?>
+
+	<!--  start page-heading -->
+	<div id="page-heading">
+		<h1>Editando Usuário </h1>
+	</div>
+	<!-- end page-heading -->
+	
+	<?= $this->userForm ?>

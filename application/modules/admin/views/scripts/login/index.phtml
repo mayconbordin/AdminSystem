@@ -1,2 +1,87 @@
 <?php
-$this->layout()->setLayout('layout');
+$this->layout()->setLayout('admin/login');
+$this->title = "Login";
+$this->headTitle($this->title);
+
+$this->headScript()->prependScript("
+	$(document).ready(function()
+		{
+			$('#submit').click(function()
+				{
+					var hasError = false;
+					var message = '';
+					
+					if ( $('#name').val() == '' && $('#password').val() == '' ) {
+						message = 'Usuário e senha são obrigatórios';
+						hasError = true;
+					} else if ( $('#name').val() == '' ) {
+						message = 'Usuário é obrigatório';
+						hasError = true;
+					} else if ( $('#password').val() == '' ) {
+						message = 'Senha é obrigatória';
+						hasError = true;
+					}
+					
+					if ( hasError ) {
+						var options = {};
+						$('#loginbox').effect('shake',options,50);
+					
+						$('#login-error').html('<div id=\'warning-message\'><p>' + message + '</p></div>');
+						return false;
+					}
+				
+					// Merge the challenge string with the password
+					var challenge = sha256( '" . $this->challenge . "' + sha256($('#password').val()) );
+
+					// Put the value inside the challenge field
+					$('#challenge').val(challenge);
+
+					// Clean the pass field
+					$('#password').val('');
+				});
+		});
+");
+?>
+			<!--  start loginbox ................................................................................. -->
+			<div id="loginbox">
+			
+				<div id="login-error">
+				<?php if ($this->errorMessage != null) {
+					echo "<div id='warning-message'>
+							<p>" . $this->errorMessage . "</p></div>";
+				} ?>
+				</div>
+			
+				<!--  start login-inner -->
+				<div id="login-inner">
+				
+					<?= $this->objFormLogin ?>
+					
+				</div>
+			 	<!--  end login-inner -->
+				<div class="clear"></div>
+				<a href="" class="forgot-pwd">Forgot Password?</a>
+			</div>
+			<!--  end loginbox -->
+		 
+			<!--  start forgotbox ................................................................................... -->
+			<div id="forgotbox">
+				<div id="forgotbox-text">Please send us your email and we'll reset your password.</div>
+				<!--  start forgot-inner -->
+				<div id="forgot-inner">
+				<table border="0" cellpadding="0" cellspacing="0">
+				<tr>
+					<th>Email address:</th>
+					<td><input type="text" value=""   class="login-inp" /></td>
+				</tr>
+				<tr>
+					<th> </th>
+					<td><input type="button" class="submit-login"  /></td>
+				</tr>
+				</table>
+				</div>
+				<!--  end forgot-inner -->
+				<div class="clear"></div>
+				<a href="" class="back-login">Back to login</a>
+			</div>
+			<!--  end forgotbox -->

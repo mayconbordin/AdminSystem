@@ -1,0 +1,147 @@
+		<!--  start nav-outer-repeat................................................................................................. START -->
+		<div class="nav-outer-repeat"> 
+			<!--  start nav-outer -->
+			<div class="nav-outer"> 
+			
+				<!-- start nav-right -->
+				<div id="nav-right">
+				
+					<div class="nav-divider">&nbsp;</div>
+					<div class="showhide-account"><img src="<?= APPLICATION_URL ?>images/shared/nav/nav_myaccount.gif" width="93" height="14" alt="" /></div>
+					<div class="nav-divider">&nbsp;</div>
+					<a href="<?= APPLICATION_URL ?>admin/logout" id="logout"><img src="<?= APPLICATION_URL ?>images/shared/nav/nav_logout.gif" width="64" height="14" alt="" /></a>
+					<div class="clear">&nbsp;</div>
+				
+					<!--  start account-content -->	
+					<div class="account-content">
+						<div class="account-drop-inner">
+							<a href="" id="acc-settings">Settings</a>
+							<div class="clear">&nbsp;</div>
+							<div class="acc-line">&nbsp;</div>
+							<a href="" id="acc-details">Personal details </a>
+							<div class="clear">&nbsp;</div>
+							<div class="acc-line">&nbsp;</div>
+							<a href="" id="acc-project">Project details</a>
+							<div class="clear">&nbsp;</div>
+							<div class="acc-line">&nbsp;</div>
+							<a href="" id="acc-inbox">Inbox</a>
+							<div class="clear">&nbsp;</div>
+							<div class="acc-line">&nbsp;</div>
+							<a href="" id="acc-stats">Statistics</a> 
+						</div>
+					</div>
+					<!--  end account-content -->
+				
+				</div>
+				<!-- end nav-right -->
+			
+			
+				<!--  start nav -->
+				<div class="nav">
+					<div class="table">
+					
+						<ul <?php if ($this->selectedMenu == 'dashboard'): ?>
+							class="current"
+							<?php else:?>
+							class="select"
+							<?php endif;?>><li><a href="<?= APPLICATION_URL ?>admin/"><b>Dashboard</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<!--[if lte IE 6]><table><tr><td><![endif]-->
+						<div class="select_sub<?php if ($this->selectedMenu == 'dashboard'): ?> show<?php endif;?>">
+							<ul class="sub">
+								<li><a href="#nogo">Dashboard Details 1</a></li>
+								<li><a href="#nogo">Dashboard Details 2</a></li>
+								<li><a href="#nogo">Dashboard Details 3</a></li>
+							</ul>
+						</div>
+						<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+						</li>
+						</ul>
+						
+						<div class="nav-divider">&nbsp;</div>
+						                    
+						<ul <?php if ($this->selectedMenu == 'products'): ?>
+							class="current"
+							<?php else:?>
+							class="select"
+							<?php endif;?>><li><a href="#nogo"><b>Products</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<!--[if lte IE 6]><table><tr><td><![endif]-->
+						<div class="select_sub<?php if ($this->selectedMenu == 'products'): ?> show<?php endif;?>">
+							<ul class="sub">
+								<li><a href="#nogo">View all products</a></li>
+								<li class="sub_show"><a href="#nogo">Add product</a></li>
+								<li><a href="#nogo">Delete products</a></li>
+							</ul>
+						</div>
+						<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+						</li>
+						</ul>
+						
+						<div class="nav-divider">&nbsp;</div>
+						
+						<ul <?php if ($this->selectedMenu == 'categories'): ?>
+							class="current"
+							<?php else:?>
+							class="select"
+							<?php endif;?>><li><a href="#nogo"><b>Categories</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<!--[if lte IE 6]><table><tr><td><![endif]-->
+						<div class="select_sub<?php if ($this->selectedMenu == 'categories'): ?> show<?php endif;?>">
+							<ul class="sub">
+								<li><a href="#nogo">Categories Details 1</a></li>
+								<li><a href="#nogo">Categories Details 2</a></li>
+								<li><a href="#nogo">Categories Details 3</a></li>
+							</ul>
+						</div>
+						<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+						</li>
+						</ul>
+						
+						<div class="nav-divider">&nbsp;</div>
+						
+						<ul <?php if ($this->selectedMenu == 'clients'): ?>
+							class="current"
+							<?php else:?>
+							class="select"
+							<?php endif;?>><li><a href="#nogo"><b>Clients</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<!--[if lte IE 6]><table><tr><td><![endif]-->
+						<div class="select_sub<?php if ($this->selectedMenu == 'clients'): ?> show<?php endif;?>">
+							<ul class="sub">
+								<li><a href="#nogo">Clients Details 1</a></li>
+								<li><a href="#nogo">Clients Details 2</a></li>
+								<li><a href="#nogo">Clients Details 3</a></li>
+							 
+							</ul>
+						</div>
+						<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+						</li>
+						</ul>
+						
+						<div class="nav-divider">&nbsp;</div>
+						
+						<ul <?php if ($this->selectedMenu == 'usuários'): ?>
+							class="current"
+							<?php else:?>
+							class="select"
+							<?php endif;?>><li><a href="<?= APPLICATION_URL ?>admin/user/"><b>Usuários</b><!--[if IE 7]><!--></a><!--<![endif]-->
+						<!--[if lte IE 6]><table><tr><td><![endif]-->
+						<div class="select_sub<?php if ($this->selectedMenu == 'usuários'): ?> show<?php endif;?>">
+							<ul class="sub">
+								<li><a href="#nogo">Ver todos</a></li>
+								<li><a href="#nogo">Adicionar</a></li>
+								<li><a href="#nogo">News details 3</a></li>
+							</ul>
+						</div>
+						<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+						</li>
+						</ul>
+						
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<!--  start nav -->
+			
+			</div>
+			<div class="clear"></div>
+			<!--  start nav-outer -->
+		</div>
+		<!--  start nav-outer-repeat................................................... END -->

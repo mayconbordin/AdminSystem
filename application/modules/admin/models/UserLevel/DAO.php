@@ -1,9 +1,9 @@
 <?php
 
-class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Login_Model_UserLevel_IDAO
+class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Admin_Model_UserLevel_IDAO
 {
 	/**
-	 * @var Login_Model_DbTable_UserLevel
+	 * @var Admin_Model_DbTable_UserLevel
 	 */
 	protected $_dbTable;
 	
@@ -15,7 +15,7 @@ class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Login_Model_UserLevel_
             $dbTable = new $dbTable();
         }
         if (!$dbTable instanceof Zend_Db_Table_Abstract) {
-            throw new Login_Model_UserLevel_Exception('Invalid table data gateway provided');
+            throw new Admin_Model_UserLevel_Exception('Invalid table data gateway provided');
         }
         $this->_dbTable = $dbTable;
         
@@ -27,7 +27,7 @@ class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Login_Model_UserLevel_
 	 */
 	public function getDbTable() {
 		if (null === $this->_dbTable) {
-            $this->setDbTable('Login_Model_DbTable_UserLevel');
+            $this->setDbTable('Admin_Model_DbTable_UserLevel');
         }
         return $this->_dbTable;
 	}
@@ -47,7 +47,7 @@ class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Login_Model_UserLevel_
 	     
 	        return $row;
 		} catch(Exception $ex) {
-			throw new Login_Model_UserLevel_Exception($ex);
+			throw new Admin_Model_UserLevel_Exception($ex);
 		}
 		
 		return null;
@@ -64,7 +64,7 @@ class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Login_Model_UserLevel_
 			$resultSet = $this->getDbTable()->fetchAll($where, $order, $count, $offset);
 	        return $resultSet->toArray();
 		} catch(Exception $ex) {
-			throw new Login_Model_UserLevel_Exception($ex);
+			throw new Admin_Model_UserLevel_Exception($ex);
 		}
 		
 		return null;
@@ -82,7 +82,7 @@ class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Login_Model_UserLevel_
 	            $this->getDbTable()->update($data, array('lev_level = ?' => $data['lev_level']));
 	        }
 		} catch(Exception $ex) {
-			throw new Login_Model_UserLevel_Exception($ex);
+			throw new Admin_Model_UserLevel_Exception($ex);
 		}
 		
 		return null;
@@ -95,7 +95,7 @@ class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Login_Model_UserLevel_
 		try {
 			$this->getDbTable()->delete(array('lev_level = ?' => $data['lev_level']));
 		} catch(Exception $ex) {
-			throw new Login_Model_UserLevel_Exception($ex);
+			throw new Admin_Model_UserLevel_Exception($ex);
 		}
 		
 		return null;
@@ -116,7 +116,7 @@ class Admin_Model_UserLevel_DAO implements Zf_Model_IDAO, Login_Model_UserLevel_
 	
 	    	return $select;
 		} catch(Exception $ex) {
-			throw new Login_Model_UserLevel_Exception($ex);
+			throw new Admin_Model_UserLevel_Exception($ex);
 		}
 		
 		return null;

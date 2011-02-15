@@ -1,1 +1,208 @@
-<br /><br /><center>View script for controller <b>User</b> and script/action name <b>index</b></center>
+<?php
+$this->layout()->setLayout('admin/admin');
+$this->title = "Usuários";
+$this->headTitle($this->title);
+$this->selectedMenu = 'usuários';
+
+//Javascripts
+$this->headScript()->prependScript("
+	$(function(){
+		$('input').checkBox();
+		
+		$('.ui-checkbox').css({'cursor':'pointer'});
+		
+		$('#toggle-all').click(function() {
+		 	$('#toggle-all').toggleClass('toggle-checked');
+			$('#mainform input[type=checkbox]').checkBox('toggle');
+			return false;
+		});
+	});
+");
+
+$this->checkboxScriptHelper();
+
+$columns = array(
+    'name' 	 	   => false, 
+    'email' 	   => false, 
+    'level' 	   => false, 
+    'lastactivity' => false
+);
+
+$columns[ $this->orderCol ] = true;
+
+?>
+
+	<!--  start page-heading -->
+	<div id="page-heading">
+		<h1>Usuários</h1>
+	</div>
+	<!-- end page-heading -->
+
+	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
+	<tr>
+		<th rowspan="3" class="sized"><img src="<?= APPLICATION_URL ?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
+		<th class="topleft"></th>
+		<td id="tbl-border-top">&nbsp;</td>
+		<th class="topright"></th>
+		<th rowspan="3" class="sized"><img src="<?= APPLICATION_URL ?>images/shared/side_shadowright.jpg" width="20" height="300" alt="" /></th>
+	</tr>
+	<tr>
+		<td id="tbl-border-left"></td>
+		<td>
+		<!--  start content-table-inner ...................................................................... START -->
+		<div id="content-table-inner">
+		
+			<!--  start table-content  -->
+			<div id="table-content">
+		 
+				<!--  start product-table ..................................................................................... -->
+				<form id="mainform" action="">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
+				<tr>
+					<th class="table-header-check"><a id="toggle-all" ></a> </th>
+					<th class="table-header-repeat line-left minwidth-1">
+						<a class="<?php if($columns['name']){echo $this->orderType;}else{echo 'asc';} ?>-order" href="
+						<?php
+						$order = 'asc';
+						
+						if ( $columns['name'] ) {
+							if ( $this->orderType == 'asc' ) {
+								$order = 'desc';
+							} else {
+								$order = 'asc';
+							}
+						}
+						
+						echo $this->url(array(
+							'module' => 'admin', 
+							'controller'=>'user', 
+							'action'=>'index', 
+							'order' => 'name-'.$order
+						)) ?>">Usuário</a>
+					</th>
+					<th class="table-header-repeat line-left">
+						<a class="<?php if($columns['email']){echo $this->orderType;}else{echo 'asc';} ?>-order" href="
+						<?php
+						$order = 'asc';
+						
+						if ( $columns['email'] ) {
+							if ( $this->orderType == 'asc' ) {
+								$order = 'desc';
+							} else {
+								$order = 'asc';
+							}
+						}
+						
+						echo $this->url(array(
+							'module' => 'admin', 
+							'controller'=>'user', 
+							'action'=>'index', 
+							'order' => 'email-'.$order
+						)) ?>">Email</a></th>
+					<th class="table-header-repeat line-left">
+						<a class="<?php if($columns['level']){echo $this->orderType;}else{echo 'asc';} ?>-order" href="
+						<?php
+						$order = 'asc';
+						
+						if ( $columns['level'] ) {
+							if ( $this->orderType == 'asc' ) {
+								$order = 'desc';
+							} else {
+								$order = 'asc';
+							}
+						}
+						
+						echo $this->url(array(
+							'module' => 'admin', 
+							'controller'=>'user', 
+							'action'=>'index', 
+							'order' => 'level-'.$order
+						)) ?>">Nível</a></th>
+					<th class="table-header-repeat line-left">
+						<a class="<?php if($columns['lastactivity']){echo $this->orderType;}else{echo 'asc';} ?>-order" href="
+						<?php
+						$order = 'asc';
+						
+						if ( $columns['lastactivity'] ) {
+							if ( $this->orderType == 'asc' ) {
+								$order = 'desc';
+							} else {
+								$order = 'asc';
+							}
+						}
+						
+						echo $this->url(array(
+							'module' => 'admin', 
+							'controller'=>'user', 
+							'action'=>'index', 
+							'order' => 'lastactivity-'.$order
+						)) ?>">Última Visita</a></th>
+					<th class="table-header-options line-left"><a href="">Opções</a></th>
+				</tr>
+				
+				<?php foreach($this->paginator as $key => $item): ?>
+				<?php if ($key%2 == 0): ?><tr><?php else: ?><tr class="alternate-row"><?php endif; ?>
+					<td><input  type="checkbox"/></td>
+					<td><?= $item['user_name'] ?></td>
+					<td><?= $item['user_email'] ?></td>
+					<td><?= $item['lev_alias'] ?></td>
+					<td><?= gmdate("d/m/Y H:i:s", $item['user_last_activity']) ?></td>
+					<td class="options-width">
+					<a href="<?= $this->url(array(
+							'module' => 'admin', 
+							'controller' => 'user', 
+							'action'=> 'edit',
+							'id' => $item['user_id']
+						)) ?>" title="Editar" class="icon-1 info-tooltip"></a>
+					<a href="<?= $this->url(array(
+							'module' => 'admin', 
+							'controller' => 'user', 
+							'action'=> 'delete',
+							'id' => $item['user_id']
+						)) ?>" title="Deletar" class="icon-2 info-tooltip"></a>
+					
+					<!-- 
+					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
+					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
+					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
+					-->
+					</td>
+				</tr>
+				<?php endforeach; ?>
+
+				</table>
+				<!--  end product-table................................... --> 
+				</form>
+			</div>
+			<!--  end content-table  -->
+		
+			<!--  start actions-box ............................................... -->
+			<div id="actions-box">
+				<a href="" class="action-slider"></a>
+				<div id="actions-box-slider">
+					<a href="" class="action-edit">Edit</a>
+					<a href="" class="action-delete">Delete</a>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<!-- end actions-box........... -->
+			
+			<!--  start paging..................................................... -->
+			<?php if($this->paginator) {
+				echo $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); } ?>
+			<!--  end paging................ -->
+			
+			<div class="clear"></div>
+		 
+		</div>
+		<!--  end content-table-inner ............................................END  -->
+		</td>
+		<td id="tbl-border-right"></td>
+	</tr>
+	<tr>
+		<th class="sized bottomleft"></th>
+		<td id="tbl-border-bottom">&nbsp;</td>
+		<th class="sized bottomright"></th>
+	</tr>
+	</table>
+	<div class="clear">&nbsp;</div>

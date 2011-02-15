@@ -1,6 +1,6 @@
 <?php
 
-class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf_Model_IRepository
+class Admin_Model_UserLevel_Repository implements Admin_Model_UserLevel_IDAO, Zf_Model_IRepository
 {
 	protected $_dao;
 	protected $_mapper;
@@ -12,8 +12,8 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
 		if (is_string($dao)) {
             $dao = new $dao();
         }
-        if (!$dao instanceof Login_Model_UserLevel_DAO) {
-            throw new Login_Model_UserLevel_Exception('Invalid data access object provided');
+        if (!$dao instanceof Admin_Model_UserLevel_DAO) {
+            throw new Admin_Model_UserLevel_Exception('Invalid data access object provided');
         }
         $this->_dao = $dao;
         
@@ -25,7 +25,7 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
 	 */
 	public function getDao() {
 		if (null === $this->_dao) {
-            $this->setDao('Login_Model_UserLevel_DAO');
+            $this->setDao('Admin_Model_UserLevel_DAO');
         }
         return $this->_dao;
 	}
@@ -38,7 +38,7 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
             $mapper = new $mapper();
         }
         if (!$mapper instanceof Zf_Model_DataMapper) {
-            throw new Login_Model_UserLevel_Exception('Invalid data mapper provided');
+            throw new Admin_Model_UserLevel_Exception('Invalid data mapper provided');
         }
         $this->_mapper = $mapper;
         
@@ -50,7 +50,7 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
 	 */
 	public function getMapper() {
 		if (null === $this->_mapper) {
-            $this->setMapper('Login_Model_UserLevel_Mapper');
+            $this->setMapper('Admin_Model_UserLevel_Mapper');
         }
         return $this->_mapper;
 	}
@@ -61,12 +61,12 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
 	public function fetchRow($id) {
 		try {
 			$row = $this->getDao()->fetchRow($id);
-			$level = $this->getMapper()->assign(new Login_Model_UserLevel_Entity(), $row);
+			$level = $this->getMapper()->assign(new Admin_Model_UserLevel_Entity(), $row);
 			return $level;
-		} catch (Login_Model_UserLevel_Exception $ex) {
+		} catch (Admin_Model_UserLevel_Exception $ex) {
 			throw $ex;
 		} catch (Zf_Model_DataMapperException $ex) {
-			throw new Login_Model_UserLevel_Exception($ex);
+			throw new Admin_Model_UserLevel_Exception($ex);
 		}
 	}
 
@@ -82,14 +82,14 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
 			$levels = array();
 			
 			foreach ( $rows as $row ) {
-				$levels[] = $this->getMapper()->assign(new Login_Model_UserLevel_Entity(), $row);
+				$levels[] = $this->getMapper()->assign(new Admin_Model_UserLevel_Entity(), $row);
 			}
 			
 			return $levels;
-		} catch (Login_Model_UserLevel_Exception $ex) {
+		} catch (Admin_Model_UserLevel_Exception $ex) {
 			throw $ex;
 		} catch (Zf_Model_DataMapperException $ex) {
-			throw new Login_Model_UserLevel_Exception($ex);
+			throw new Admin_Model_UserLevel_Exception($ex);
 		}
 		
 		return null;
@@ -102,7 +102,7 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
 		try {
 			$dataArray = $this->getMapper()->map($data);
 			$this->getDao()->save($dataArray);
-		} catch (Login_Model_UserLevel_Exception $ex) {
+		} catch (Admin_Model_UserLevel_Exception $ex) {
 			throw $ex;
 		}
 		
@@ -116,7 +116,7 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
 		try {
 			$dataArray = $this->getMapper()->map($data);
 			$this->getDao()->delete($dataArray);
-		} catch (Login_Model_UserLevel_Exception $ex) {
+		} catch (Admin_Model_UserLevel_Exception $ex) {
 			throw $ex;
 		}
 		
@@ -128,8 +128,8 @@ class Admin_Model_UserLevel_Repository implements Login_Model_UserLevel_IDAO, Zf
 	 */
 	public function select($order = null) {
 		try {
-			$this->getDao()->select($order);
-		} catch (Login_Model_UserLevel_Exception $ex) {
+			return $this->getDao()->select($order);
+		} catch (Admin_Model_UserLevel_Exception $ex) {
 			throw $ex;
 		}
 		

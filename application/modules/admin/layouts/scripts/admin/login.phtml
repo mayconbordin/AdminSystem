@@ -1,0 +1,44 @@
+<?= $this->render('header.phtml') ?>
+
+		<?php
+			//Stylesheets
+			$this->screenStylesheetHelper();			
+		
+			//Javascripts
+			$this->pNGFixHelper();
+			$this->loginReadyScriptHelper();
+			$this->sHA256Helper();
+			$this->shakeUIHelper();
+			$this->jQueryHelper();
+		?>
+		
+		<!-- Start: stylesheets -->
+		<?= $this->headLink() ?>
+		
+		<!-- End: stylesheets -->
+		
+		<!-- Start: javascripts -->
+		<?= $this->headScript() ?>
+		
+		<!-- End: javascripts -->
+		
+	</head>
+	<body id="login-bg"> 
+ 
+		<!-- Start: login-holder -->
+		<div id="login-holder">
+		
+			<!-- start logo -->
+			<div id="logo-login">
+				<a href="index.html"><img src="<?= APPLICATION_URL ?>images/shared/logo.png" width="156" height="40" alt="" /></a>
+			</div>
+			<!-- end logo -->
+			
+			<div class="clear"></div>
+			
+			<?= $this->layout()->content ?>
+		
+		</div>
+		<!-- End: login-holder -->
+
+<?= $this->render('footer.phtml') ?>

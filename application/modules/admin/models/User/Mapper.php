@@ -12,7 +12,7 @@ class Admin_Model_User_Mapper extends Zf_Model_DataMapper
             	'user_password'  	 => 'password',
             	'user_challenge' 	 => 'challenge',
             	'user_level' 	 	 => array(
-            								'class' => 'Login_Model_UserLevel_Entity', 
+            								'class' => 'Admin_Model_UserLevel_Entity', 
             								'child' => 'level', 
             								'parent' => 'level'),
             	'user_last_activity' => 'lastActivity'

@@ -1,19 +1,19 @@
 <?php
 
-class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRepository
+class Admin_Model_User_Repository implements Admin_Model_User_IDAO, Zf_Model_IRepository
 {
 	protected $_dao;
 	protected $_mapper;
 	
 	/**
-	 * @param Login_Model_User_DAO $dbTable
+	 * @param Admin_Model_User_DAO $dbTable
 	 */
 	public function setDao($dao) {
 		if (is_string($dao)) {
             $dao = new $dao();
         }
-        if (!$dao instanceof Login_Model_User_DAO) {
-            throw new Login_Model_User_Exception('Invalid data access object provided');
+        if (!$dao instanceof Admin_Model_User_DAO) {
+            throw new Admin_Model_User_Exception('Invalid data access object provided');
         }
         $this->_dao = $dao;
         
@@ -21,24 +21,24 @@ class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRe
 	}
 
 	/**
-	 * @return Login_Model_User_DAO
+	 * @return Admin_Model_User_DAO
 	 */
 	public function getDao() {
 		if (null === $this->_dao) {
-            $this->setDao('Login_Model_User_DAO');
+            $this->setDao('Admin_Model_User_DAO');
         }
         return $this->_dao;
 	}
 	
 	/**
-	 * @param string|Login_Model_User_Mapper $mapper
+	 * @param string|Admin_Model_User_Mapper $mapper
 	 */
 	public function setMapper($mapper) {
 		if (is_string($mapper)) {
             $mapper = new $mapper();
         }
         if (!$mapper instanceof Zf_Model_DataMapper) {
-            throw new Login_Model_User_Exception('Invalid data mapper provided');
+            throw new Admin_Model_User_Exception('Invalid data mapper provided');
         }
         $this->_mapper = $mapper;
         
@@ -46,28 +46,28 @@ class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRe
 	}
 
 	/**
-	 * @return Login_Model_User_Mapper
+	 * @return Admin_Model_User_Mapper
 	 */
 	public function getMapper() {
 		if (null === $this->_mapper) {
-            $this->setMapper('Login_Model_User_Mapper');
+            $this->setMapper('Admin_Model_User_Mapper');
         }
         return $this->_mapper;
 	}
 	
 	/**
 	 * @param int $id
-	 * @return Login_Model_User_Entity
+	 * @return Admin_Model_User_Entity
 	 */
 	public function fetchRow($id) {
 		try {
 			$row = $this->getDao()->fetchRow($id);
-			$user = $this->getMapper()->assign(new Login_Model_User_Entity(), $row);
+			$user = $this->getMapper()->assign(new Admin_Model_User_Entity(), $row);
 			return $user;
-		} catch (Login_Model_User_Exception $ex) {
+		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		} catch (Zf_Model_DataMapperException $ex) {
-			throw new Login_Model_User_Exception($ex);
+			throw new Admin_Model_User_Exception($ex);
 		}
 	}
 
@@ -76,7 +76,7 @@ class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRe
 	 * @param string|array $order
 	 * @param int $count
 	 * @param int $offset
-	 * @return array of Login_Model_User_Entity
+	 * @return array of Admin_Model_User_Entity
 	 */
 	public function fetchAll($where = null, $order = null, $count = null, $offset = null) {
 		try {
@@ -84,14 +84,14 @@ class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRe
 			$users = array();
 			
 			foreach ( $rows as $row ) {
-				$users[] = $this->getMapper()->assign(new Login_Model_User_Entity(), $row);
+				$users[] = $this->getMapper()->assign(new Admin_Model_User_Entity(), $row);
 			}
 			
 			return $users;
-		} catch (Login_Model_User_Exception $ex) {
+		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		} catch (Zf_Model_DataMapperException $ex) {
-			throw new Login_Model_User_Exception($ex);
+			throw new Admin_Model_User_Exception($ex);
 		}
 		
 		return null;
@@ -99,30 +99,30 @@ class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRe
 
 	/**
 	 * @param string $name
-	 * @return Login_Model_User_Entity
+	 * @return Admin_Model_User_Entity
 	 */
 	public function fetchByName($name) {
 		try {
 			$row = $this->getDao()->fetchByName($name);
-			$user = $this->getMapper()->assign(new Login_Model_User_Entity(), $row);
+			$user = $this->getMapper()->assign(new Admin_Model_User_Entity(), $row);
 			return $user;
-		} catch (Login_Model_User_Exception $ex) {
+		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		} catch (Zf_Model_DataMapperException $ex) {
-			throw new Login_Model_User_Exception($ex);
+			throw new Admin_Model_User_Exception($ex);
 		}
 		
 		return null;
 	}
 
 	/**
-	 * @param Login_Model_User_Entity $data
+	 * @param Admin_Model_User_Entity $data
 	 */
 	public function save($data) {
 		try {
 			$dataArray = $this->getMapper()->map($data);
 			$this->getDao()->save($dataArray);
-		} catch (Login_Model_User_Exception $ex) {
+		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		}
 		
@@ -130,13 +130,13 @@ class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRe
 	}
 
 	/**
-	 * @param Login_Model_User_Entity $data
+	 * @param Admin_Model_User_Entity $data
 	 */
 	public function delete($data) {
 		try {
 			$dataArray = $this->getMapper()->map($data);
 			$this->getDao()->delete($dataArray);
-		} catch (Login_Model_User_Exception $ex) {
+		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		}
 		
@@ -148,8 +148,8 @@ class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRe
 	 */
 	public function select($order = null) {
 		try {
-			$this->getDao()->select($order);
-		} catch (Login_Model_User_Exception $ex) {
+			return $this->getDao()->select($order);
+		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		}
 		
@@ -157,32 +157,32 @@ class Admin_Model_User_Repository implements Login_Model_User_IDAO, Zf_Model_IRe
 	}
 
 	/**
-	 * @param Login_Model_User_Entity $data
+	 * @param Admin_Model_User_Entity $data
 	 */
 	public function updateChallenge($data) {
 		try {
 			$dataArray = $this->getMapper()->map($data);
 			$this->getDao()->updateChallenge($dataArray);
-		} catch (Login_Model_User_Exception $ex) {
+		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		} catch (Zf_Model_DataMapperException $ex) {
-			throw new Login_Model_User_Exception($ex);
+			throw new Admin_Model_User_Exception($ex);
 		}
 		
 		return null;
 	}
 
 	/**
-	 * @param Login_Model_User_Entity $data
+	 * @param Admin_Model_User_Entity $data
 	 */
 	public function updateLastActivity($data) {
 		try {
 			$dataArray = $this->getMapper()->map($data);
 			$this->getDao()->updateLastActivity($dataArray);
-		} catch (Login_Model_User_Exception $ex) {
+		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		} catch (Zf_Model_DataMapperException $ex) {
-			throw new Login_Model_User_Exception($ex);
+			throw new Admin_Model_User_Exception($ex);
 		}
 		
 		return null;

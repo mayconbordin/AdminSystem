@@ -102,7 +102,7 @@ class Admin_Model_User_Entity extends Zf_Model_Entity
 	/**
 	 * @param $level the $level to set
 	 */
-	public function setLevel(Login_Model_UserLevel_Entity $level) {
+	public function setLevel(Admin_Model_UserLevel_Entity $level) {
 		$this->level = $level;
 		return $this;
 	}
