@@ -38,6 +38,7 @@
           </controllersDirectory>
           <formsDirectory>
             <formFile formName="User"/>
+            <formFile formName="Login"/>
           </formsDirectory>
           <layoutsDirectory enabled="false"/>
           <modelsDirectory>
@@ -64,6 +65,7 @@
             <modelFile modelName="UserLevel/Mapper"/>
             <modelFile modelName="UserLevel/Repository"/>
             <modelFile modelName="UserLevel/Exception"/>
+            <modelFile modelName="User/Message"/>
           </modelsDirectory>
           <viewsDirectory>
             <viewScriptsDirectory>

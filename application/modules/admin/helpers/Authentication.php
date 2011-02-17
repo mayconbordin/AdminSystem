@@ -16,7 +16,13 @@ class Admin_Helper_Authentication extends Zend_Controller_Action_Helper_Abstract
         $objAuth = Zend_Auth::getInstance();
     
         // Verifica se já está autenticado
-        return $objAuth->hasIdentity();
+        if ($objAuth->hasIdentity()) {
+        	return true;
+        } else {
+        	if(Zf_Util_Cookie::cookieExists( Zend_Registry::get('admin_config')->resources->cookie->name )) {
+        		
+        	}
+        }
     }
     
 	public function checkLoginAttempts($success, $username) {  	
@@ -31,13 +37,15 @@ class Admin_Helper_Authentication extends Zend_Controller_Action_Helper_Abstract
     }
     
     public function updateUserActivity() {
-    	$authNamespace = new Zend_Session_Namespace('Zend_Auth');
+    	if ($this->hasIdentity()) {
+    		$authNamespace = new Zend_Session_Namespace('Zend_Auth');
     	
-    	$user = new Admin_Model_User_Entity();
-    	$user->setId( $authNamespace->userId );
-    	$user->setLastActivity( time() );
-    	
-    	$userRepository = new Admin_Model_User_Repository();
-    	$userRepository->updateLastActivity($user);
+	    	$user = new Admin_Model_User_Entity();
+	    	$user->setId( $authNamespace->userId );
+	    	$user->setLastActivity( time() );
+	    	
+	    	$userRepository = new Admin_Model_User_Repository();
+	    	$userRepository->updateLastActivity($user);
+    	}
     }
 }

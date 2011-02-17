@@ -3,16 +3,33 @@
 class Admin_LoginController extends Zend_Controller_Action
 {
 	protected $_params;
+	protected $_userMessage;
 	
+	protected function _setUserMessage($userMessage) {
+		$this->_userMessage = $userMessage;
+	}
+	
+	protected function _getUserMessage() {
+		if (is_null($this->_userMessage)) {
+			$this->_setUserMessage(new Admin_Model_User_Message());
+		}
+		return $this->_userMessage;
+	}
+		
     public function init()
     {
         // update the user's activity
-        //$this->_helper->Authentication->updateUserActivity();
+        $this->_helper->Authentication->updateUserActivity();
     }
 
     public function indexAction()
     {
         $this->view->errorMessage = null;
+        $this->view->successMessage = null;
+        
+        if (!is_null($this->_getParam("status"))) {
+        	$this->view->successMessage = $this->_getUserMessage()->getMessage($this->_getParam("status"));
+        }
     	
     	// Cria uma instancia de Zend_Auth
         $objAuth = Zend_Auth::getInstance();
@@ -20,11 +37,7 @@ class Admin_LoginController extends Zend_Controller_Action
         // Verifica se já está autenticado
         if ( !$objAuth->hasIdentity() ) {
 	    	// Instancia o formulário de login
-	        //$objFormLogin = new Login_Form_Login();
-	        //$this->view->objFormLogin = $objFormLogin;
-	        
-        	$objFormLogin = new Admin_Form_User();
-        	$objFormLogin = $objFormLogin->getLoginForm();
+        	$objFormLogin = new Admin_Form_Login();
         	$this->view->objFormLogin = $objFormLogin;
 	 
 	        // Verifica se foi submetido via POST
@@ -61,12 +74,9 @@ class Admin_LoginController extends Zend_Controller_Action
 	        /**
 	         * Salva a chave de autenticação
 	         */
-	        //$userMapper = new Login_Model_UserMapper();
-	        
 	        $userRepository = new Admin_Model_User_Repository();
 	        
 	        //Pega o usuário que será autenticado
-	        //$user = $userMapper->getByName( $this->_params['username'] );
 	        $user = $userRepository->fetchByName( $this->_params['name'] );
 	        
 	        if ( $user != null ) {
@@ -77,14 +87,12 @@ class Admin_LoginController extends Zend_Controller_Action
 		        $authNamespace->userId = $user->getId();
 		                
 		        //Cria a chave de autenticação
-		        //$key = sha1($challenge . $user->getPassword());
 		        $key = hash('sha256', $challenge . $user->getPassword());
 		        
 		        //Atualiza a chave do objeto
 		        $user->setChallenge( $key );
 		        
 		        //Atualiza a chave de autenticação do usuário
-		        //$userMapper->updateChallenge( $user );
 		        $userRepository->updateChallenge($user);
 		        
 		        // Configura as credencias user_email e user_password informadas pelo usuário
@@ -109,7 +117,6 @@ class Admin_LoginController extends Zend_Controller_Action
 		            $objAuth->getStorage()->write( $authData );
 		            
 		            // faz a verificação de tentativas de login
-		            //$this->_checkLoginAttempts(true);
 		            $this->_helper->Authentication->checkLoginAttempts(true, $this->_params['name']);
 		            
 		            //COOKIE
@@ -119,8 +126,8 @@ class Admin_LoginController extends Zend_Controller_Action
 		            $this->_redirect("admin");
 		        } else {
 		        	// atribui a mensagem de erro
-		        	$this->view->errorMessage = "Usuário e/ou senha inválidos";
-		        	
+		        	$this->view->errorMessage = $this->_getUserMessage()->getMessage(Admin_Model_User_Message::WRONG_USER_PASS);
+		        			        	
 		        	// faz a verificação de tentativas de login
 		        	$this->_helper->Authentication->checkLoginAttempts(true, $this->_params['name']);
 		        	
@@ -132,7 +139,7 @@ class Admin_LoginController extends Zend_Controller_Action
 		        }
 	        } else {
 	        	// atribui a mensagem de erro
-	        	$this->view->errorMessage = "Usuário e/ou senha inválidos";
+	        	$this->view->errorMessage = $this->_getUserMessage()->getMessage(Admin_Model_User_Message::WRONG_USER_PASS);
 	        	
 	        	// faz a verificação de tentativas de login
 	        	$this->_helper->Authentication->checkLoginAttempts(true, $this->_params['name']);

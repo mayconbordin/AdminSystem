@@ -99,13 +99,16 @@ class Admin_Model_User_Repository implements Admin_Model_User_IDAO, Zf_Model_IRe
 
 	/**
 	 * @param string $name
-	 * @return Admin_Model_User_Entity
+	 * @return Admin_Model_User_Entity|null
 	 */
 	public function fetchByName($name) {
 		try {
 			$row = $this->getDao()->fetchByName($name);
-			$user = $this->getMapper()->assign(new Admin_Model_User_Entity(), $row);
-			return $user;
+			
+			if (!is_null($row)) {
+				$user = $this->getMapper()->assign(new Admin_Model_User_Entity(), $row);
+				return $user;
+			}
 		} catch (Admin_Model_User_Exception $ex) {
 			throw $ex;
 		} catch (Zf_Model_DataMapperException $ex) {

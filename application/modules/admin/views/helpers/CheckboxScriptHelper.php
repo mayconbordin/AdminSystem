@@ -12,7 +12,7 @@ class Zend_View_Helper_CheckboxScriptHelper extends Zend_View_Helper_Abstract
 		);
 		
 		$this->view->headScript()->prependFile(
-			$this->view->baseUrl() . '/js/jquery/ui.core.js'
+			$this->view->baseUrl() . '/js/jquery/ui/jquery.ui.core.min.js'
 		);
 	}
 }

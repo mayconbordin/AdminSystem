@@ -15,9 +15,9 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             dirname(__FILE__) . '/configs/admin.ini', 
             $this->getEnvironment()
         );
-        
+                
         Zend_Registry::set('admin_config', $config);
-        
+                
         return $config;
     }
 
@@ -45,5 +45,22 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
                          'layoutPath' => APPLICATION_PATH . '/modules/admin/layouts/scripts/',
                          'content'    => 'content');
         Zend_Layout::startMvc($options);
+    }
+    
+    protected function _initTranslator()
+    {
+    	// Create the object and add a language
+		$translate = new Zend_Translate('Array', APPLICATION_PATH . '/modules/admin/language/english.php', 'en_US');
+		
+		// Add another translation
+		$translate->addTranslation(APPLICATION_PATH . '/modules/admin/language/portuguese.php', 'pt_BR');
+		
+		$language = Zend_Registry::get('admin_config')->resources->language;
+		
+		// Set the default translation
+		$translate->setLocale($language);
+		
+		//Register the translator
+		Zend_Registry::set('Zend_Translate', $translate);
     }
 }

@@ -6,6 +6,11 @@ $this->headTitle($this->title);
 $this->headScript()->prependScript("
 	$(document).ready(function()
 		{
+			//Remove required suffix
+			$('.required').each(function() {
+				$(this).html( $(this).html().replace('*', '') );
+			});
+			
 			$('#submit').click(function()
 				{
 					var hasError = false;
@@ -46,10 +51,15 @@ $this->headScript()->prependScript("
 			<div id="loginbox">
 			
 				<div id="login-error">
-				<?php if ($this->errorMessage != null) {
-					echo "<div id='warning-message'>
+				<?php
+				if ($this->errorMessage != null) {
+					echo "<div id='error-message'>
 							<p>" . $this->errorMessage . "</p></div>";
-				} ?>
+				} elseif ($this->successMessage != null) {
+					echo "<div id='success-message'>
+							<p>" . $this->successMessage . "</p></div>";
+				}
+				?>
 				</div>
 			
 				<!--  start login-inner -->

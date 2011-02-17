@@ -20,17 +20,16 @@ class Admin_Form_User extends Zend_Form
         $this->setName('userform');
     	$this->setAction('');
         $this->setMethod('POST');
-        
+                        
         $this->id = new Zend_Form_Element_Hidden('id');
                 
-        $this->name = new Zend_Form_Element_Text('name');
+        $this->name = new Zf_Form_Element_Text('name');
         $this->name->setLabel('Usuário')
         	 ->addValidator('NotEmpty')
         	 ->addValidator('Alpha')
         	 ->addValidator('stringLength', false, array(5, 150))
          	 ->setRequired(true)
-             ->addFilter('StringToLower')
-             ->setErrorMessages( array("Valor não pode ser vazio") );
+             ->addFilter('StringToLower');
         	 
         $this->email = new Zend_Form_Element_Text('email');
         $this->email->setLabel('E-mail')
@@ -38,29 +37,23 @@ class Admin_Form_User extends Zend_Form
         	  ->addValidator('EmailAddress')
         	  ->addValidator('stringLength', false, array(1, 100))
          	  ->setRequired(true)
-              ->addFilter('StringToLower')
-              ->setErrorMessages( array("Valor não pode ser vazio") );
+              ->addFilter('StringToLower');
               
         $this->password = new Zend_Form_Element_Password('password');
         $this->password->setLabel('Senha')
         	  	 ->addValidator('NotEmpty')
         	  	 ->addValidator('stringLength', false, array(6))
-         	  	 ->setRequired(true)
-             	 ->setErrorMessages( array("Valor não pode ser vazio") );
+         	  	 ->setRequired(true);
               
         $this->password2 = new Zend_Form_Element_Password('password2');
         $this->password2->setLabel('Repetir Senha')
         	  	 	  ->addValidator('NotEmpty')
         	  	 	  ->addValidator('stringLength', false, array(6))
-         	  	 	  ->setRequired(true)
-             	 	  ->setErrorMessages( array("Valor não pode ser vazio") );
+         	  	 	  ->setRequired(true);
              	 
         $this->level = new Zend_Form_Element_Select('level');
-        $this->level->setLabel('Nível')
-        	  ->setErrorMessages( array("Valor não está na lista") );
-        	  
-       	//$this->level->addMultiOption(1, 'Um');
-       	
+        $this->level->setLabel('Nível');
+        	         	
        	$this->challenge = new Zend_Form_Element_Hidden('challenge');
        	
        	$this->remember = new Zend_Form_Element_Checkbox('login-check');
@@ -100,6 +93,10 @@ class Admin_Form_User extends Zend_Form
     	$this->name->setAttrib('class', 'login-inp');
     	$this->password->setAttrib('class', 'login-inp');
     	
+    	$this->name->removeValidator('NotEmpty');
+    	$this->name->removeValidator('Alpha');
+    	$this->name->removeValidator('stringLength');
+    	
     	$this->password->removeValidator('NotEmpty');
     	$this->password->removeValidator('stringLength');
     	$this->password->setRequired(false);
@@ -113,6 +110,21 @@ class Admin_Form_User extends Zend_Form
                 $this->loginBtn
             )
         );
+        
+       	$dGroup = $this->addDisplayGroups(array('name', 'password'), 'inputs');
+        $group = $dGroup->getDisplayGroup('inputs');
+        
+        if($group != null) {
+        	$group->setDecorators(array(
+
+            array('Label', array('requiredSuffix' => '',
+                                  'tag' => 'dt',
+                                  'escape' => false))
+        	));
+        }
+                
+        
+        
         
         return $this;
     }
