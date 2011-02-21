@@ -211,4 +211,39 @@ class Zf_Model_DataMapper
         }
         return $array;
     }
+        
+    /**
+     * Return a field value based on the given property
+     * 
+     * @param string $property
+     * @return string|null
+     */
+    public function getField($property)
+    {
+    	foreach($this->map as $index => $value) {
+    		if (is_array($value)) {
+    			$value = $value['parent'];
+    		}
+    		if (strcmp($value, $property) == 0) {
+    			return $index;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+	/**
+     * Return a property value based on the given field
+     * 
+     * @param string $property
+     * @return string|null
+     */
+    public function getProperty($field)
+    {
+    	if (isset($this->map[$field])) {
+    		return $this->map[$field];
+    	} else {
+    		return null;
+    	}
+    }
 }

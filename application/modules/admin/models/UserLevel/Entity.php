@@ -34,5 +34,9 @@ class Admin_Model_UserLevel_Entity extends Zf_Model_Entity
 		$this->alias = $alias;
 		return $this;
 	}
+	
+	public function __toString() {
+		return ucfirst(strtolower($this->alias));
+	}
 
 }

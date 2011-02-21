@@ -2,130 +2,114 @@
 
 class Admin_Form_User extends Zend_Form
 {
-	protected $id;
-	protected $name;
-	protected $email;
-	protected $password;
-	protected $password2;
-	protected $level;
-	protected $challenge;
+	protected $_inputDecorator = array(
+		    'ViewHelper',
+        	array('Description',array('tag'=>'td')),
+            'CustomErrors',
+            array(array('data'=>'HtmlTag'),
+            array('tag'=>'td')),
+            array('Label',array('tag'=>'th', 'requiredSuffix' => ' *')),
+            array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
+	);
 	
-	protected $remember;
-	
-	protected $saveBtn;
-	protected $loginBtn;
+	protected $_inputDecorator2 = array(
+		    'ViewHelper',
+        	array('Description',array('tag'=>'td')),
+            'CustomErrors',
+            array(array('data'=>'HtmlTag'),
+            array('tag'=>'td')),
+            array('Label',array('tag'=>'th', 'requiredSuffix' => '')),
+            array(array('row'=>'HtmlTag'),array('tag'=>'tr')),
+	);
 	
     public function init()
     {
         $this->setName('userform');
     	$this->setAction('');
         $this->setMethod('POST');
+        
+        $this->addElementPrefixPath('Zf_Form_Decorator',
+                            'Zf/Form/Decorator/',
+                            'decorator');
+        
+        $this->setDecorators(array(
+            'FormElements',
+            array('HtmlTag', array(
+            	'tag' => 'table', 
+            	'border' => "0", 
+            	'cellpadding' => "0", 
+            	'cellspacing' => "0", 
+            	'id' => "id-form")),
+            'Form',
+        ));
                         
-        $this->id = new Zend_Form_Element_Hidden('id');
-                
-        $this->name = new Zf_Form_Element_Text('name');
-        $this->name->setLabel('Usuário')
+        $id = new Zend_Form_Element_Hidden('id');
+                        
+        $name = new Zend_Form_Element_Text('name');
+        $name->setLabel('Usuário')
         	 ->addValidator('NotEmpty')
         	 ->addValidator('Alpha')
         	 ->addValidator('stringLength', false, array(5, 150))
          	 ->setRequired(true)
-             ->addFilter('StringToLower');
-        	 
-        $this->email = new Zend_Form_Element_Text('email');
-        $this->email->setLabel('E-mail')
+             ->addFilter('StringToLower')
+             ->setAttrib('class', 'inp-form')
+             ->setDecorators($this->_inputDecorator);
+      	 
+        $email = new Zend_Form_Element_Text('email');
+        $email->setLabel('E-mail')
         	  ->addValidator('NotEmpty')
         	  ->addValidator('EmailAddress')
         	  ->addValidator('stringLength', false, array(1, 100))
          	  ->setRequired(true)
-              ->addFilter('StringToLower');
+              ->addFilter('StringToLower')
+             ->setAttrib('class', 'inp-form')
+             ->setDecorators($this->_inputDecorator);
               
-        $this->password = new Zend_Form_Element_Password('password');
-        $this->password->setLabel('Senha')
+        $password = new Zend_Form_Element_Password('password');
+        $password->setLabel('Senha')
         	  	 ->addValidator('NotEmpty')
         	  	 ->addValidator('stringLength', false, array(6))
-         	  	 ->setRequired(true);
+         	  	 ->setRequired(true)
+             	 ->setAttrib('class', 'inp-form')
+             	 ->setDecorators($this->_inputDecorator);
               
-        $this->password2 = new Zend_Form_Element_Password('password2');
-        $this->password2->setLabel('Repetir Senha')
-        	  	 	  ->addValidator('NotEmpty')
-        	  	 	  ->addValidator('stringLength', false, array(6))
-         	  	 	  ->setRequired(true);
+        $password2 = new Zend_Form_Element_Password('password2');
+        $password2->setLabel('')
+        	  	  ->addValidator('NotEmpty')
+        	  	  ->addValidator('stringLength', false, array(6))
+         	  	  ->setRequired(true)
+             	  ->setAttrib('class', 'inp-form')
+             	  ->setDecorators($this->_inputDecorator2);
              	 
-        $this->level = new Zend_Form_Element_Select('level');
-        $this->level->setLabel('Nível');
-        	         	
-       	$this->challenge = new Zend_Form_Element_Hidden('challenge');
-       	
-       	$this->remember = new Zend_Form_Element_Checkbox('login-check');
-        $this->remember ->setLabel('Remember me')
-        		  		->setAttrib('class', 'checkbox-size')
-        		  		->setAttrib('id', 'login-check');
+        $level = new Zend_Form_Element_Select('level');
+        $level->setLabel('Nível')
+        	  ->setAttrib('class', 'styledselect_form_1')
+        	  ->setDecorators($this->_inputDecorator);
  
-        $this->saveBtn = new Zend_Form_Element_Submit('save');
-        $this->saveBtn->setLabel('Salvar')
-        	 		  ->setName("submit");
-        	 		  
-        $this->loginBtn = new Zend_Form_Element_Submit('login');
-        $this->loginBtn->setLabel('Login')
-        	 		   ->setName("submit")
-        	 		   ->setAttrib('class', 'submit-login');
-    }
-    
-    public function getUserForm()
-    {
-    	$this->addElements(
+        $save = new Zend_Form_Element_Submit('save');
+        $save->setLabel('')
+        	 ->setAttrib('class', 'form-submit')
+        	 ->setName("submit")
+        	 ->setDecorators($this->_inputDecorator);
+        	 
+       	$this->addElements(
             array(
-            	$this->id,
-                $this->name,
-                $this->email,
-                $this->password,
-                $this->password2,
-                $this->level,
-                $this->saveBtn
+                $id,
+                $name,
+                $email,
+                $password,
+                $password2,
+                $level,
+                $save
             )
         );
-        
-        return $this;
     }
     
-	public function getLoginForm()
-    {
-    	$this->name->setAttrib('class', 'login-inp');
-    	$this->password->setAttrib('class', 'login-inp');
-    	
-    	$this->name->removeValidator('NotEmpty');
-    	$this->name->removeValidator('Alpha');
-    	$this->name->removeValidator('stringLength');
-    	
-    	$this->password->removeValidator('NotEmpty');
-    	$this->password->removeValidator('stringLength');
-    	$this->password->setRequired(false);
-    	
-    	$this->addElements(
-            array(
-            	$this->challenge,
-                $this->name,
-                $this->password,
-                $this->remember,
-                $this->loginBtn
-            )
-        );
-        
-       	$dGroup = $this->addDisplayGroups(array('name', 'password'), 'inputs');
-        $group = $dGroup->getDisplayGroup('inputs');
-        
-        if($group != null) {
-        	$group->setDecorators(array(
-
-            array('Label', array('requiredSuffix' => '',
-                                  'tag' => 'dt',
-                                  'escape' => false))
-        	));
-        }
-                
-        
-        
-        
-        return $this;
+    public function removerNameValidators() {
+    	$name = $this->getElement('name');
+    	$name->removeValidator('NotEmpty');
+    	$name->removeValidator('Alpha');
+    	$name->removeValidator('stringLength');
+    	$name->setRequired(false);
     }
 }

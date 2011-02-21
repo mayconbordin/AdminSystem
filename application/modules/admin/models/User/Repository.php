@@ -117,6 +117,23 @@ class Admin_Model_User_Repository implements Admin_Model_User_IDAO, Zf_Model_IRe
 		
 		return null;
 	}
+	
+	/**
+	 * @param string $name
+	 * @param string $challenge
+	 * @return Admin_Model_User_Entity|null
+	 */
+	public function existsByNameAndChallenge($name, $challenge) {
+		try {
+			return $this->getDao()->existsByNameAndChallenge($name, $challenge);
+		} catch (Admin_Model_User_Exception $ex) {
+			throw $ex;
+		} catch (Zf_Model_DataMapperException $ex) {
+			throw new Admin_Model_User_Exception($ex);
+		}
+		
+		return null;
+	}
 
 	/**
 	 * @param Admin_Model_User_Entity $data

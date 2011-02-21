@@ -6,11 +6,6 @@ $this->headTitle($this->title);
 $this->headScript()->prependScript("
 	$(document).ready(function()
 		{
-			//Remove required suffix
-			$('.required').each(function() {
-				$(this).html( $(this).html().replace('*', '') );
-			});
-			
 			$('#submit').click(function()
 				{
 					var hasError = false;

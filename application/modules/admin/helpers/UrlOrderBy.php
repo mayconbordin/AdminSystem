@@ -2,7 +2,7 @@
 
 class Admin_Helper_UrlOrderBy extends Zend_Controller_Action_Helper_Abstract
 {
-	public function parse($orderBy, $columns)
+	public function parse($orderBy, $config)
     {
         //Tipo de ordenação
     	$orderType = array('asc', 'desc');
@@ -11,7 +11,7 @@ class Admin_Helper_UrlOrderBy extends Zend_Controller_Action_Helper_Abstract
     	$order = explode('-', $orderBy);
     	
     	//Verifica se a coluna existe
-    	if ( !isset( $columns[ $order[0] ] ) ) {
+    	if ( !isset( $config['columns'][ $order[0] ] ) ) {
     		$order[0] = 'name';
     	}
     	
@@ -21,7 +21,7 @@ class Admin_Helper_UrlOrderBy extends Zend_Controller_Action_Helper_Abstract
     	}
     	
     	//String de ordenação
-    	$orderStr = $columns[$order[0]]['field'] . ' ' . $order[1];
+    	$orderStr = $config['mapper']->getField( $order[0] ) . ' ' . $order[1];
     	
     	return $orderStr;
     }

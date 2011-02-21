@@ -1,0 +1,32 @@
+AdminSystem - A Zend Framework Administration System
+================================================================================
+
+
+FEATURES:
+=========
+
+- Administration panel.
+
+- Levels of users.
+
+- User administration (list, edit, delete).
+
+- User registration with forgot password feature (user registration can be disabled).
+
+- Brute force protection (block username/ip after n failed attempts).
+
+- User timeout after n time without activity.
+
+- Remember me functionality (uses mcrypt encryption to hide user information on
+  the cookie using as the key for encryption some user info (ip, useragent, language, etc).
+  
+- CHAP Auth - do not expose the user password through the network, instead a
+  random string (challenge) is generated in server side, recorded on the database
+  and sended to the user's login form. When the user submit his auth info, the 
+  password is hashed using sha256, added to the challenge and then re-hashed. The
+  value generated in client-side should be the same as the value in the server-side.
+  
+- Modification or remotion of users or the modification of the own account are only
+  allowed after password autentication.
+  
+- Multi-language support.

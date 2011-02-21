@@ -5,6 +5,10 @@ class Admin_Form_Login extends Zend_Form
 
     public function init()
     {
+    	$this->setName('loginform');
+    	$this->setAction('');
+        $this->setMethod('POST');
+        
         $name = new Zend_Form_Element_Text('name');
         $name->setLabel('formLabels_Username')
          	 ->setRequired(true)

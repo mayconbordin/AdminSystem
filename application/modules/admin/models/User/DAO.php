@@ -93,6 +93,31 @@ class Admin_Model_User_DAO implements Zf_Model_IDAO, Admin_Model_User_IDAO
 		
 		return null;
 	}
+	
+	/**
+	 * @param string $name
+	 * @return bool
+	 */
+	public function existsByNameAndChallenge($name, $challenge) {
+		try {
+			$select = $this->getDbTable()
+	    		   ->select()
+        		   ->from($this->getDbTable(), array('count(*) as amount'))
+        		   ->where('user_name = ?', $name)
+        		   ->where('user_challenge = ?', $challenge);
+        	$rows = $this->getDbTable()->fetchAll($select);
+        	
+        	if ($rows[0]->amount > 0) {
+        		return true;
+        	} else {
+        		return false;
+        	}
+		} catch(Exception $ex) {
+			throw new Admin_Model_User_Exception($ex);
+		}
+		
+		return false;
+	}
 
 	/**
 	 * @param array $data
@@ -118,7 +143,11 @@ class Admin_Model_User_DAO implements Zf_Model_IDAO, Admin_Model_User_IDAO
 	 */
 	public function delete($data) {
 		try {
-			$this->getDbTable()->delete(array('user_id = ?' => $data['user_id']));
+			if (is_array($data)) {
+				$this->getDbTable()->delete(array('user_id = ?' => $data['user_id']));
+			} else {
+				$this->getDbTable()->delete('user_id IN (?)', $data);
+			}
 		} catch(Exception $ex) {
 			throw new Admin_Model_User_Exception($ex);
 		}
@@ -133,7 +162,7 @@ class Admin_Model_User_DAO implements Zf_Model_IDAO, Admin_Model_User_IDAO
 		try {
 			$select = $this->getDbTable()
 	    		   ->select()
-	    		   ->from('users', array('user_id', 'user_name', 'user_email', 'user_last_activity'))
+	    		   ->from($this->getDbTable(), array('user_id', 'user_name', 'user_email', 'user_last_activity'))
 	    		   ->setIntegrityCheck(false)
 	    		   ->join('user_levels', 'user_levels.lev_level = users.user_level', 'lev_alias');
 	    		   

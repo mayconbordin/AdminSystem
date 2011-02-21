@@ -1,3 +1,9 @@
+	<!--  start page-heading -->
+	<div id="page-heading">
+		<h1>Usuários</h1>
+	</div>
+	<!-- end page-heading -->
+
 	<table border="0" width="100%" cellpadding="0" cellspacing="0" id="content-table">
 	<tr>
 		<th rowspan="3" class="sized"><img src="<?= APPLICATION_URL ?>images/shared/side_shadowleft.jpg" width="20" height="300" alt="" /></th>
@@ -18,14 +24,12 @@
 				<!--  start product-table ..................................................................................... -->
 				<form id="mainform" action="">
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table">
-				
-				<!-- start table header -->
 				<tr>
 					<th class="table-header-check"><a id="toggle-all" ></a> </th>
-
+					
 					<?php foreach ( $this->columns as $key => $item ): ?>
 					<th class="table-header-repeat line-left">
-						<a class="<?php if($this->orderCol == $key){echo $this->orderType;}else{echo 'asc';} ?>-order" href="
+						<a <?php if($this->orderCol == $key){echo 'class="'.$this->orderType.'-order"';} ?> href="
 						<?php
 						$order = 'asc';
 						
@@ -37,10 +41,15 @@
 							}
 						}
 						
-						$urlOptions = array_merge($this->urlOptions, array('order' => $key.'-'.$order));
-						
+						$urlOptions = array(
+										'module' => $this->url['module'],
+										'controller' => $this->url['controller'],
+										'action' => 'index',
+										'order' => $key.'-'.$order
+						);
+
 						echo $this->url($urlOptions)
-						?>"><?= $item['name'] ?></a>
+						?>"><?= $item['title'] ?></a>
 					</th>
 					<?php endforeach; ?>
 					
@@ -50,16 +59,42 @@
 				<?php foreach($this->paginator as $key => $item): ?>
 				<?php if ($key%2 == 0): ?><tr><?php else: ?><tr class="alternate-row"><?php endif; ?>
 					<td><input  type="checkbox"/></td>
-					<td><?= $item['user_name'] ?></td>
-					<td><?= $item['user_email'] ?></td>
-					<td><?= $item['lev_alias'] ?></td>
-					<td><?= gmdate("d/m/Y H:i:s", $item['user_last_activity']) ?></td>
+					
+					<?php
+					foreach($this->columns as $colKey => $colItem) {
+						if ( isset($colItem['field'])) {
+							$value = $item[ $colItem['field'] ];
+						} else {
+							$value = $item[ $this->mapper->getField( $colKey ) ];
+						}
+
+						if ( isset($colItem['filter']) ) {
+							$value = $colItem['filter']($value);
+							
+						}
+					?>
+					<td><?= $value ?></td>
+					<?php } ?>
+					
 					<td class="options-width">
-					<a href="" title="Edit" class="icon-1 info-tooltip"></a>
-					<a href="" title="Edit" class="icon-2 info-tooltip"></a>
+					<a href="<?= $this->url(array(
+							'module' => $this->url['module'],
+							'controller' => $this->url['controller'], 
+							'action'=> 'edit',
+							'id' => $item[  $this->mapper->getField( $this->url['id'] ) ]
+						)) ?>" title="Editar" class="icon-1 info-tooltip"></a>
+					<a href="<?= $this->url(array(
+							'module' => $this->url['module'],
+							'controller' => $this->url['controller'],
+							'action'=> 'delete',
+							'id' => $item[  $this->mapper->getField( $this->url['id'] ) ]
+						)) ?>" title="Deletar" class="icon-2 info-tooltip"></a>
+					
+					<!-- 
 					<a href="" title="Edit" class="icon-3 info-tooltip"></a>
 					<a href="" title="Edit" class="icon-4 info-tooltip"></a>
 					<a href="" title="Edit" class="icon-5 info-tooltip"></a>
+					-->
 					</td>
 				</tr>
 				<?php endforeach; ?>
@@ -99,3 +134,4 @@
 		<th class="sized bottomright"></th>
 	</tr>
 	</table>
+	<div class="clear">&nbsp;</div>
